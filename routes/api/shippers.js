@@ -118,20 +118,4 @@ router.get(
 );
 
 
-// get assigned to driver loads
-router.get(
-    '/shippers/:id/loads/assigned',
-    validate(schemas.routeId, 'params'),
-    checkPermission(role.SHIPPER),
-    async (req, res) => {
-      const shipperId = req.params.id;
-      try {
-        const loads = await ShipperService.getAssignedLoads(shipperId);
-        return res.status(200).json({loads});
-      } catch (err) {
-        return res.status(500).json({error: err.message});
-      }
-    },
-);
-
 module.exports = router;

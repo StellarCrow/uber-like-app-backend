@@ -4,14 +4,6 @@ const UserService = require('../../services/UserService');
 const schemas = require('../../validation/JoiSchemas');
 const validate = require('../middleware/requestValidator');
 
-/**
- * @api {post} /api/users Registrate new user
- * @apiName PostUser
- * @apiGroup User
- *
- *
- * @apiSuccess {Object} user registrated User.
- */
 
 router.post(
     '/auth/register',
@@ -36,14 +28,6 @@ router.post(
     },
 );
 
-/**
- * @api {post} /api/users Sign in user
- * @apiName PostUser
- * @apiGroup User
- *
- *
- * @apiSuccess {Object} user signed in User.
- */
 
 router.post(
     '/auth/login',

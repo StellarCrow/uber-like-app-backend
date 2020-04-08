@@ -27,7 +27,6 @@ router.get(
     },
 );
 
-
 // update truck info
 router.put(
     '/drivers/:id/trucks/:sid',

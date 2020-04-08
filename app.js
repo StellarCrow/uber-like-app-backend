@@ -19,7 +19,7 @@ console.log(mongoose.connection.readyState);
 
 const checkAuthorization = require('./routes/middleware/auth');
 
-const registerRoute = require('./routes/api/registration');
+const registerRoute = require('./routes/api/auth');
 const driversRoute = require('./routes/api/drivers');
 const shippersRoute = require('./routes/api/shippers');
 const usersRoute = require('./routes/api/users');

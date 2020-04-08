@@ -1,5 +1,5 @@
 # Krevetochka Delivery Server Side
-Updated version of the server based on ApiDoc for automated tests. This version may not have some enpoints from the [full version](https://github.com/StellarCrow/uber-like-app) of app.
+Updated (based on ApiDoc) version of the server for automated tests. This version may not have some enpoints from the [full version](https://github.com/StellarCrow/uber-like-app) of app.
 
 ## Project setup
 

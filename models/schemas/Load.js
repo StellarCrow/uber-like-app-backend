@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const LoadSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
@@ -60,14 +59,14 @@ const LoadSchema = new Schema({
     required: true,
   },
   deliveryAddress: {
-    city: {type: String, required: true},
-    street: {type: String, required: true},
-    zip: {type: String, required: true},
+    city: {type: String},
+    street: {type: String},
+    zip: {type: String},
   },
   pickUpAddress: {
-    city: {type: String, required: true},
-    street: {type: String, required: true},
-    zip: {type: String, required: true},
+    city: {type: String},
+    street: {type: String},
+    zip: {type: String},
   },
 });
 

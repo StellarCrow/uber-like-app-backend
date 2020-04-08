@@ -65,7 +65,7 @@ class ShipperService {
     if (!truck) {
       await LoadModel.changeStatus(loadId, loadStatus.NEW);
       await LoadModel.addLog(loadId, logMessage.DRIVER_NOT_FOUND);
-      throw new Error('Driver not found. Load state changed to NEW.');
+      return null;
     }
 
     const driverId = truck.assigned_to;
@@ -74,6 +74,7 @@ class ShipperService {
     await LoadModel.addLog(loadId, logMessage.DRIVER_FOUND);
     await LoadModel.changeState(loadId, loadState.EN_ROUTE_TO_PICK_UP);
     await LoadModel.addLog(loadId, logMessage.EN_ROUTE_TO_PICKUP);
+    return driverId;
   }
 
   async getShippingInfo(loadId) {

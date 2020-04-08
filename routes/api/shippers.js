@@ -47,17 +47,31 @@ router.delete(
 
 // create load
 router.post(
-    '/shippers/:id/loads',
-    validate(schemas.routeId, 'params'),
+    '/loads',
     checkPermission(role.SHIPPER),
     validate(schemas.createLoad, 'body'),
     async (req, res) => {
-      const shipperId = req.params.id;
-      const loadInfo = req.body;
+      const shipperId = req.jwtUser.id;
+      const loadInfo = {
+        dimensions: req.body.dimensions,
+        payload: req.body.payload,
+        name: 'Load',
+        status: 'NEW',
+        deliveryAddress: {
+          city: 'Kyiv',
+          street: 'street 32',
+          zip: '07258',
+        },
+        pickUpAddress: {
+          city: 'Kyiv',
+          street: 'street 33',
+          zip: '07249',
+        },
+      };
 
       try {
-        const newLoad = await ShipperService.createLoad(shipperId, loadInfo);
-        return res.status(201).json({load: newLoad});
+        await ShipperService.createLoad(shipperId, loadInfo);
+        return res.status(200).json({status: 'Load created successfully'});
       } catch (err) {
         return res.status(500).json({error: err.message});
       }
@@ -116,18 +130,22 @@ router.delete(
 );
 
 // post load
-router.post(
-    '/shippers/:id/loads/:sid',
-    validate(schemas.routeIds, 'params'),
+router.patch(
+    '/loads/:id/post',
+    validate(schemas.routeId, 'params'),
     checkPermission(role.SHIPPER),
     async (req, res) => {
-      const loadId = req.params.sid;
+      const loadId = req.params.id;
 
       try {
-        await ShipperService.postLoad(loadId);
-        return res
-            .status(200)
-            .json({message: 'Load was successfully posted. Driver is assigned.'});
+        const assignedTo = await ShipperService.postLoad(loadId);
+        if (assignedTo) {
+          return res
+              .status(200)
+              .json({status: 'Load posted successfully', assigned_to: assignedTo});
+        } else {
+          return res.status(200).json({status: 'No drivers found'});
+        }
       } catch (err) {
         if (err.name === 'ServerError') {
           return res.status(500).json({error: err.message});
@@ -157,7 +175,8 @@ router.get(
 );
 
 // get assigned to driver loads
-router.get('/shippers/:id/loads/assigned',
+router.get(
+    '/shippers/:id/loads/assigned',
     validate(schemas.routeId, 'params'),
     checkPermission(role.SHIPPER),
     async (req, res) => {
@@ -168,7 +187,8 @@ router.get('/shippers/:id/loads/assigned',
       } catch (err) {
         return res.status(500).json({error: err.message});
       }
-    });
+    },
+);
 
 // get list of loads
 router.get(

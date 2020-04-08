@@ -179,6 +179,15 @@ class LoadModel {
       throw new ServerError(err.message);
     }
   }
+
+  async getDriverLoads(driverId) {
+    try {
+      const loads = await Load.find({assigned_to: driverId, status: loadStatus.ASSIGNED});
+      return loads;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
 }
 
 module.exports = new LoadModel();

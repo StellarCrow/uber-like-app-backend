@@ -60,8 +60,8 @@ class DriverService {
   }
 
   async getLoad(driverId) {
-    const load = await DriverModel.getLoad(driverId);
-    return load;
+    const loads = await LoadModel.getDriverLoads(driverId);
+    return loads;
   }
 
   async changeLoadState(driverId, state) {

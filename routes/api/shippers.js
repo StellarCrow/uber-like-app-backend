@@ -45,38 +45,6 @@ router.delete(
     },
 );
 
-// create load
-router.post(
-    '/loads',
-    checkPermission(role.SHIPPER),
-    validate(schemas.createLoad, 'body'),
-    async (req, res) => {
-      const shipperId = req.jwtUser.id;
-      const loadInfo = {
-        dimensions: req.body.dimensions,
-        payload: req.body.payload,
-        name: 'Load',
-        status: 'NEW',
-        deliveryAddress: {
-          city: 'Kyiv',
-          street: 'street 32',
-          zip: '07258',
-        },
-        pickUpAddress: {
-          city: 'Kyiv',
-          street: 'street 33',
-          zip: '07249',
-        },
-      };
-
-      try {
-        await ShipperService.createLoad(shipperId, loadInfo);
-        return res.status(200).json({status: 'Load created successfully'});
-      } catch (err) {
-        return res.status(500).json({error: err.message});
-      }
-    },
-);
 
 // update load
 router.put(
@@ -129,31 +97,6 @@ router.delete(
     },
 );
 
-// post load
-router.patch(
-    '/loads/:id/post',
-    validate(schemas.routeId, 'params'),
-    checkPermission(role.SHIPPER),
-    async (req, res) => {
-      const loadId = req.params.id;
-
-      try {
-        const assignedTo = await ShipperService.postLoad(loadId);
-        if (assignedTo) {
-          return res
-              .status(200)
-              .json({status: 'Load posted successfully', assigned_to: assignedTo});
-        } else {
-          return res.status(200).json({status: 'No drivers found'});
-        }
-      } catch (err) {
-        if (err.name === 'ServerError') {
-          return res.status(500).json({error: err.message});
-        }
-        return res.status(404).json({error: err.message});
-      }
-    },
-);
 
 // get shipping info
 router.get(
@@ -173,6 +116,7 @@ router.get(
       }
     },
 );
+
 
 // get assigned to driver loads
 router.get(

@@ -82,12 +82,9 @@ class ShipperService {
     return logs;
   }
 
-  async getLoadsList(shipperId, statusFilter, page) {
-    const query = {created_by: shipperId, status: {$regex: statusFilter}};
-    const loadsCount = await LoadModel.getLoadsCount(query);
-    const paginateInfo = this.paginateLoads(loadsCount, page);
-    const loads = await ShipperModel.getLoadsList(shipperId, statusFilter, paginateInfo);
-    return {loads, paginateInfo};
+  async getLoadsList(shipperId) {
+    const loads = await ShipperModel.getLoadsList(shipperId);
+    return loads;
   }
 
   paginateLoads(itemsCount, currentPage) {

@@ -1,0 +1,17 @@
+{
+    "dbConfig": {
+        "host": "localhost",
+        "port": "27017",
+        "dbName": "uber_like_app"
+    },
+    "jwt_secret": "secret",
+    "AWS": {
+        "accessKeyId": "accessKey",
+        "secretAccessKey": "secretAccessKey",
+        "BUCKET_NAME": "bucket-name",
+        "REGION": "region"
+    },
+    "weather": {
+        "apiKey": "apikey"
+    } 
+}

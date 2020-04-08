@@ -10,7 +10,6 @@ const Schema = mongoose.Schema;
 const TruckSchema = new Schema({
   name: {
     type: String,
-    required: true,
     default: 'Truck',
   },
   created_by: {

@@ -24,6 +24,7 @@ const driversRoute = require('./routes/api/drivers');
 const shippersRoute = require('./routes/api/shippers');
 const usersRoute = require('./routes/api/users');
 const loadsRoute = require('./routes/api/loads');
+const trucksRoute = require('./routes/api/trucks');
 const weatherRoute = require('./routes/api/weather');
 
 app.use(logger('dev'));
@@ -38,6 +39,7 @@ app.use('/api', usersRoute);
 app.use('/api', driversRoute);
 app.use('/api', shippersRoute);
 app.use('/api', loadsRoute);
+app.use('/api', trucksRoute);
 
 socket.connect();
 

@@ -15,7 +15,7 @@ const type = {
     },
   },
   SS: {
-    name: 'SS',
+    name: 'SMALL STRAIGHT',
     payload: 2500,
     dimensions: {
       width: 250,
@@ -24,7 +24,7 @@ const type = {
     },
   },
   LS: {
-    name: 'LS',
+    name: 'LARGE STRAIGHT',
     payload: 4000,
     dimensions: {
       width: 350,

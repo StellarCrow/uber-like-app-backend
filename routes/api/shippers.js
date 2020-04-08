@@ -134,29 +134,4 @@ router.get(
     },
 );
 
-// get list of loads
-router.get(
-    '/shippers/:id/loads/(:query)?',
-    validate(schemas.routeId, 'params'),
-    validate(schemas.loadsQuery, 'query'),
-    checkPermission(role.SHIPPER),
-    async (req, res) => {
-      const shipperId = req.params.id;
-      const statusFilter = req.query.filter || '';
-      const page = parseInt(req.query.page) || 1;
-
-      try {
-        const {loads, paginateInfo} = await ShipperService.getLoadsList(
-            shipperId,
-            statusFilter,
-            page,
-        );
-        return res
-            .status(200)
-            .json({meta: {pagination: paginateInfo, filter: statusFilter}, loads});
-      } catch (err) {
-        return res.status(500).json({error: err.message});
-      }
-    },
-);
 module.exports = router;

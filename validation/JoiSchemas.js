@@ -33,7 +33,7 @@ const schemas = {
     query: Joi.string(),
   }),
   createTruck: Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string(),
     type: Joi.any().valid(...truckTypesEnum).required(),
   }),
   truckUpdate: Joi.object({

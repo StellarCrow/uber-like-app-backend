@@ -82,4 +82,19 @@ router.get('/loads', async (req, res) => {
   }
 });
 
+router.patch(
+    '/loads/:id/state',
+    validate(schemas.routeId, 'params'),
+    checkPermission(role.DRIVER),
+    async (req, res) => {
+      const driverId = req.params.id;
+      try {
+        await DriverService.changeLoadState(driverId, state);
+        return res.status(200).json({message: 'Success.'});
+      } catch (err) {
+        res.status(500).json({error: err.message});
+      }
+    },
+);
+
 module.exports = router;

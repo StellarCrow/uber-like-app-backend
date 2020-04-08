@@ -24,7 +24,7 @@ class DriverService {
     const hasAssignedLoad = await DriverModel.hasAssignedLoad(driverId);
     if (hasAssignedLoad) {
       throw new Error(
-          'Driver cannot assign truck, because he already has assigned load',
+        'Driver cannot assign truck, because he already has assigned load',
       );
     }
     const assigned = await DriverModel.assignTruck(driverId, truckId);
@@ -37,7 +37,7 @@ class DriverService {
     const hasAssignedLoad = await DriverModel.hasAssignedLoad(driver);
     if (hasAssignedLoad) {
       throw new Error(
-          'You are not allowed to update any truck if you have assigned load',
+        'You are not allowed to update any truck if you have assigned load',
       );
     }
 
@@ -64,14 +64,14 @@ class DriverService {
     return loads;
   }
 
-  async changeLoadState(driverId, state) {
-    const hasAssignedLoad = await DriverModel.hasAssignedLoad(driverId);
-    if (!hasAssignedLoad) {
+  async changeLoadState(loadId) {
+    const load = await LoadModel.changeLoadStateAutomated(loadId);
+    if (!load) {
       throw new Error('There is no assigned load to make any changes.');
     }
-    const load = await DriverModel.changeLoadState(driverId, state);
-    await LoadModel.addLog(load._id, state);
-    if (state === loadState.ARRIVED_TO_DELIVERY) {
+    const driverId = load.assigned_to;
+    await LoadModel.addLog(load._id, load.state);
+    if (load.state === loadState.ARRIVED_TO_DELIVERY) {
       await LoadModel.changeStatus(load._id, loadStatus.SHIPPED);
       await DriverModel.removeLoad(driverId);
       await DriverModel.changeTruckStatus(driverId, truckStatus.IN_SERVICE);

@@ -81,21 +81,4 @@ router.delete(
     },
 );
 
-// change load state
-router.patch(
-    '/drivers/:id/loads',
-    validate(schemas.routeId, 'params'),
-    checkPermission(role.DRIVER),
-    validate(schemas.changeLoadStatus, 'body'),
-    async (req, res) => {
-      const driverId = req.params.id;
-      const state = req.body.state;
-      try {
-        await DriverService.changeLoadState(driverId, state);
-        return res.status(200).json({message: 'Success.'});
-      } catch (err) {
-        res.status(500).json({error: err.message});
-      }
-    },
-);
 module.exports = router;

@@ -87,10 +87,10 @@ router.patch(
     validate(schemas.routeId, 'params'),
     checkPermission(role.DRIVER),
     async (req, res) => {
-      const driverId = req.params.id;
+      const loadId = req.params.id;
       try {
-        await DriverService.changeLoadState(driverId, state);
-        return res.status(200).json({message: 'Success.'});
+        await DriverService.changeLoadState(loadId);
+        return res.status(200).json({message: 'Load status changed successfully'});
       } catch (err) {
         res.status(500).json({error: err.message});
       }

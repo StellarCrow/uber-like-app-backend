@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/StellarCrow/uber-like-app.git"
+    "url": "git+https://github.com/StellarCrow/uber-like-app-backend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/StellarCrow/uber-like-app/issues"
+    "url": "https://github.com/StellarCrow/uber-like-app-backend/issues"
   },
-  "homepage": "https://github.com/StellarCrow/uber-like-app#readme"
+  "homepage": "https://github.com/StellarCrow/uber-like-app-backend#readme"
 }

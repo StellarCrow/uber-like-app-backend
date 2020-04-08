@@ -3,7 +3,7 @@ const Shipper = require('./schemas/Shipper');
 const Truck = require('./schemas/Truck');
 const Driver = require('./schemas/Driver');
 const ServerError = require('../errors/ServerError');
-const {loadStatus} = require('../utils/loadConstants');
+const {loadStatus, loadStateEnum} = require('../utils/loadConstants');
 const {truckStatus} = require('../utils/truckConstants');
 
 class LoadModel {
@@ -105,6 +105,26 @@ class LoadModel {
     }
   }
 
+  async changeLoadStateAutomated(loadId) {
+    try {
+      const {state} = await Load.findById(loadId).select('state');
+      const oldState = state;
+      if (oldState) {
+        const newStateIndex = loadStateEnum.indexOf(oldState) + 1;
+        const newState = loadStateEnum[newStateIndex];
+        const updatedLoad = await Load.findOneAndUpdate(
+            {_id: loadId},
+            {state: newState},
+            {new: true},
+        );
+        return updatedLoad;
+      }
+      return null;
+    } catch (err) {
+      throw new ServerError(err.message);
+    }
+  }
+
   async findTruck(id) {
     try {
       const truckList = await Truck.find({status: truckStatus.IN_SERVICE});
@@ -182,7 +202,10 @@ class LoadModel {
 
   async getDriverLoads(driverId) {
     try {
-      const loads = await Load.find({assigned_to: driverId, status: loadStatus.ASSIGNED});
+      const loads = await Load.find({
+        assigned_to: driverId,
+        status: loadStatus.ASSIGNED,
+      });
       return loads;
     } catch (err) {
       throw new ServerError(err.message);
